@@ -6,7 +6,7 @@ feed, regression-tests the artheia generators, and asserts end-to-end signal
 flow across Functional Clusters.
 
 This repo is the **harness only** — the reusable library. The `.robot` *scenarios*
-that test a specific Theia live in the consuming project (e.g. `pero_theia` at
+that test a specific Theia live in the consuming project (e.g. `theia` at
 `testing/scenarios/`) and import this library as `rf_theia.TheiaTestLibrary`.
 
 ## Install

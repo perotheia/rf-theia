@@ -5,3 +5,8 @@ __pycache__/
 /output.xml
 /log.html
 /report.html
+
+# python build artifacts
+build/
+dist/
+*.egg-info/

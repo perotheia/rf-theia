@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rf-theia"
+version = "0.1.0"
+description = "Robot Framework testing harness for the theia/artheia stack."
+requires-python = ">=3.10"
+dependencies = [
+    "robotframework>=7.0",
+    "grpcio>=1.60",
+    "protobuf>=4.25",
+    "numpy",
+    "pandas",
+    "asteval",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "fastmcp>=3.0",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov",
+]
+
+[project.scripts]
+rf-theia-mcp = "rf_theia.adapters.mcp_server:main"
+
+[tool.setuptools.packages.find]
+# Ship ONLY the harness library (TheiaTestLibrary, adapters, runtime, testkit,
+# tpt_engine, assessment, space). The .robot SCENARIOS are NOT part of this
+# package — they live in the consuming repo (e.g. <repo>/testing/scenarios) and
+# import the harness as `rf_theia.TheiaTestLibrary`. rf-theia is the reusable
+# library; the scenarios are project tests.
+include = ["rf_theia*"]

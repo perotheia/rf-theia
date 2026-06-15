@@ -46,7 +46,7 @@ rf-theia-mcp = "rf_theia.adapters.mcp_server:main"
 
 [tool.setuptools.packages.find]
 # Ship ONLY the harness library (TheiaTestLibrary, adapters, runtime, testkit,
-# tpt_engine, assessment, space). The .robot SCENARIOS are NOT part of this
+# tpt_engine, assessment). The .robot SCENARIOS are NOT part of this
 # package — they live in the consuming repo (e.g. <repo>/testing/scenarios) and
 # import the harness as `rf_theia.TheiaTestLibrary`. rf-theia is the reusable
 # library; the scenarios are project tests.

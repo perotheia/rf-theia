@@ -6,8 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "rf-theia"
 version = "0.1.0"
 description = "Robot Framework testing harness for the theia/artheia stack."
+readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
+authors = [{ name = "Theia" }]
+keywords = ["robot-framework", "testing", "test-automation", "autosar", "theia"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Robot Framework",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "robotframework>=7.0",
     "grpcio>=1.60",
@@ -16,6 +27,10 @@ dependencies = [
     "pandas",
     "asteval",
 ]
+
+[project.urls]
+Homepage = "https://github.com/perotheia/rf-theia"
+Repository = "https://github.com/perotheia/rf-theia"
 
 [project.optional-dependencies]
 mcp = [

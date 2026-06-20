@@ -2,7 +2,7 @@
 
 A gen_statem node takes no wire messages; its gate (a receiver node) does, and
 post_event()s each into the FSM in-process. This adapter binds a tester
-identity from a `.art` (a sender node, e.g. demo's DemoFsmTester) and casts
+identity from a `.art` (a sender node, e.g. an app's MyFsmTester) and casts
 events at the gate over ONE persistent, ORDERED connection — so a sequence of
 events reaches the FSM in order (separate per-event sockets race, dropping
 events; see project-probe-connect-stale-bindings).
@@ -59,7 +59,7 @@ class ProbeAdapter:
         return self
 
     def emit(self, event: str, **fields: object) -> None:
-        """Cast ``event`` (a DemoFsmIn data element name) at the gate."""
+        """Cast ``event`` (a MyFsmIn data element name) at the gate."""
         if self._probe is None:
             raise RuntimeError("ProbeAdapter.emit before start()")
         self._probe.cast(self.gate, event, **fields)

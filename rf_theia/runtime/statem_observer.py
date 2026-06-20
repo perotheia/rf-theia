@@ -48,7 +48,7 @@ TK_STATEM = 5
 class StatemObserver:
     """Tails the STATEM trace for one node, republishing transitions on a bus.
 
-    ``node_filter`` is the statem node's kNodeName (e.g. "demo_fsm"); only its
+    ``node_filter`` is the statem node's kNodeName (e.g. "my_fsm"); only its
     records are forwarded. The kind filter is set to STATEM so the observer
     Subscribes for just the FSM transitions.
     """

@@ -43,7 +43,7 @@ def _composition_from_art_node(art_node: str) -> str:
     """Extract the composition name from a Component.art_node string.
 
     artheia emits ``art_node`` in the form ``"<package>/<TypeName>"``
-    (e.g. ``"system.demo/Demo3WayP1"``). The TypeName is the
+    (e.g. ``"system.app/MyAppP1"``). The TypeName is the
     composition. Robust to no-slash form: returns the whole string
     if there's no separator.
     """

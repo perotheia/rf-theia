@@ -2,7 +2,7 @@
 
 artheia emits this via:
 
-    artheia rig-deps apps.manifest.rig --out demo_rig.json
+    artheia rig-deps apps.manifest.rig --out app_rig.json
 
 The schema is the STABLE contract between artheia (the SUT description
 language) and rf-theia (the test framework). When artheia changes its

@@ -6,7 +6,7 @@ The decoder is split into plugins, each a `libtrace_decoder_*.so`:
     framework wire types), built by Bazel from
     ``//platform/runtime/trace:libtrace_decoder_system.so``.
   * ``libtrace_decoder_apps.so`` — a consuming workspace's APP plugin
-    (its own ``system_apps_*`` types), built from ``//trace:libtrace_decoder_apps.so``.
+    (its own ``system_app_*`` types), built from ``//trace:libtrace_decoder_apps.so``.
 
 Each .so carries its OWN process-global registry + its OWN ``trace_decode``
 C ABI. This adapter dlopen()s EVERY plugin it finds and, to decode a record,
@@ -32,7 +32,7 @@ Plugin-dir discovery, in order:
   2. Legacy single-.so envs (``RF_THEIA_TRACE_DECODER_SO`` /
      ``THEIA_TRACE_DECODER``) — treated as one explicit plugin.
   3. Well-known ``bazel-bin/`` locations discovered by walking up from this
-     file, for BOTH the framework system plugin and a demo apps plugin.
+     file, for BOTH the framework system plugin and an app plugin.
 """
 from __future__ import annotations
 
@@ -63,7 +63,7 @@ _SYSTEM_PLUGIN_NAME = "libtrace_decoder_system.so"
 def _walk_bazel_bin_candidates() -> List[Path]:
     """Well-known bazel-bin plugin locations, walking up from this file.
 
-    Returns both the FRAMEWORK system plugin and a demo apps plugin under
+    Returns both the FRAMEWORK system plugin and an app plugin under
     every ``bazel-bin/`` ancestor (framework root + a sibling consuming
     workspace's bazel-bin).
     """

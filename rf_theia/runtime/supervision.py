@@ -18,7 +18,7 @@ Tree shape (matches deploy/.staging/<machine>/ipk/executor.yaml)::
           network_sup [one_for_one] → nm, com, …
           host_svc_sup [one_for_one] → per, rds
           pltf_sup [one_for_one] → phm, ucm, …
-        app_sup [one_for_one] → demo_p1, demo_p2, demo_p3
+        app_sup [one_for_one] → app_p1, app_p2, app_p3
 
 Strategy semantics encoded:
 

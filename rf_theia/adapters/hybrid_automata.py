@@ -1,9 +1,9 @@
 """HybridAutomata — drive + observe ANY gen_statem FC standalone.
 
-A gen_statem FC (DemoFsm, SmDaemon, …) is a hybrid automaton: discrete states
+A gen_statem FC (MyFsm, SmDaemon, …) is a hybrid automaton: discrete states
 with event- and timeout-driven transitions, each carrying FSM `data` (OTP
 `{State, Data}`). This adapter tests one such FC end-to-end, parameterized by
-the FC's node names + `.art`, so the SAME machinery drives demo_fsm AND sm:
+the FC's node names + `.art`, so the SAME machinery drives my_fsm AND sm:
 
   - INJECT events at the gate via artheia.probe (ordered casts over one
     connection) — the statem node takes no wire messages; its gate (a receiver)
@@ -59,14 +59,14 @@ class HybridAutomata:
     """Drives + observes one gen_statem FC. One instance per FC under test.
 
     Construction parameters identify the FC; nothing is hardcoded so the same
-    adapter serves demo_fsm, sm, and any future statem FC:
+    adapter serves my_fsm, sm, and any future statem FC:
 
       node    — the statem node's kNodeName (trace src + push target), e.g.
-                "demo_fsm" / "sm_daemon".
-      gate    — the receiver node events are cast at, e.g. "DemoFsmGate" /
+                "my_fsm" / "sm_daemon".
+      gate    — the receiver node events are cast at, e.g. "MyFsmGate" /
                 "SmGate".
       tester  — a sender node (in the FC's .art, not deployed) the probe binds
-                as the cast SOURCE, e.g. "DemoFsmTester" / "SmTester".
+                as the cast SOURCE, e.g. "MyFsmTester" / "SmTester".
       art     — the FC `.art` (canonical system/ path) carrying gate + tester +
                 the event messages.
       ready   — OPTIONAL supervisor-log substring (a node's on_enter line) used

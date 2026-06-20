@@ -135,7 +135,7 @@ class TheiaTestLibrary:
         # Hybrid-automata (gen_statem) testing — drive+observe one statem FC
         # standalone (probe injects events, observer reads the STATEM trace).
         # Created by `Start Statem Stack`; parameterized by the FC's nodes/.art
-        # so the SAME keywords drive demo_fsm, sm, and any statem FC.
+        # so the SAME keywords drive my_fsm, sm, and any statem FC.
         self._statem: Optional[HybridAutomata] = None
 
     # ──────────────────────────────────────────────────────────────────
@@ -349,7 +349,7 @@ class TheiaTestLibrary:
     # Hybrid-automata (gen_statem) keywords. Drive + observe ANY statem FC
     # standalone: the probe injects events at the FC's gate, the observer
     # reads the STATEM trace. Parameterized by the FC's node names + .art so
-    # the SAME keywords drive demo_fsm, sm, and any future statem FC. Backed
+    # the SAME keywords drive my_fsm, sm, and any future statem FC. Backed
     # by adapters/hybrid_automata.HybridAutomata.
     # ──────────────────────────────────────────────────────────────────
 
@@ -363,8 +363,8 @@ class TheiaTestLibrary:
 
         Example::
 
-            Start Statem Stack    node=demo_fsm    gate=DemoFsmGate
-            ...    tester=DemoFsmTester    art=system/demo/package.art
+            Start Statem Stack    node=my_fsm    gate=MyFsmGate
+            ...    tester=MyFsmTester    art=system/app/package.art
 
         ``art`` is the FC's .art (canonical system/ path); ``tester`` a sender
         node in it the probe binds as the cast source. Readiness is checked by
@@ -382,7 +382,7 @@ class TheiaTestLibrary:
 
     @keyword("Emit Statem Event")
     def emit_statem_event(self, event: str, **fields: Any) -> None:
-        """Cast a gate-interface event (e.g. DemoStart / StartupComplete) at
+        """Cast a gate-interface event (e.g. MyStart / StartupComplete) at
         the FC's gate, in order, over the probe's one connection."""
         self._require_statem()
         assert self._statem is not None
@@ -800,7 +800,7 @@ class TheiaTestLibrary:
 
         Example::
 
-            Assert Routes To    CounterNode    GetReply    DriverNode    ObserverNode
+            Assert Routes To    MyNode    MyReply    OtherNode    ThirdNode
         """
         topo = self._require_topology()
         actual = sorted(topo.destinations_of(source, msg))

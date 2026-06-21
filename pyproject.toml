@@ -21,6 +21,12 @@ classifiers = [
 ]
 dependencies = [
     "robotframework>=7.0",
+    # The supervisor adapter drives the live stack via artheia's gen_server
+    # PROBE (artheia.gen_server.probe) materialized from tdb.art — NOT a
+    # hand-rolled client and NOT a tools.tdb import. The [probe] extra pulls
+    # grpcio-tools (the protoc compiler the probe codec uses for the lazy
+    # .proto → _pb2 build) + protobuf.
+    "artheia[probe]",
     "grpcio>=1.60",
     "protobuf>=4.25",
     "numpy",

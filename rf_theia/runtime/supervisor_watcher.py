@@ -17,7 +17,7 @@ Events published:
 Each event's payload includes ``{name, prev_state, restart_count, pid}``.
 
 Phase-2 (later): replace polling with the supervisor's streaming
-subscription RPC, which already exists in supdbg.client.Client.
+subscription RPC the probe-backed SupervisorClient drives via tdb.art.
 """
 from __future__ import annotations
 

@@ -58,6 +58,15 @@ _PLUGIN_GLOB = "libtrace_decoder_*.so"
 # The framework (reference) plugin's filename — its version is the baseline
 # the others are compared against.
 _SYSTEM_PLUGIN_NAME = "libtrace_decoder_system.so"
+# Build byproducts that share the libtrace_decoder_* prefix but are NOT
+# loadable plugins (registrar TU with undefined symbols / the decoder-core lib).
+_PLUGIN_NOT = ("_protos.so",)
+
+
+def _is_plugin_filename(name: str) -> bool:
+    """True for a real plugin .so (libtrace_decoder_<world>.so), False for the
+    cc_library/cc_binary byproducts the _PLUGIN_GLOB also matches."""
+    return name.startswith("libtrace_decoder_") and not name.endswith(_PLUGIN_NOT)
 
 
 def _walk_bazel_bin_candidates() -> List[Path]:
@@ -99,7 +108,15 @@ def _discover_plugins() -> List[Path]:
         if not d:
             continue
         for so in sorted(glob.glob(os.path.join(d, _PLUGIN_GLOB))):
-            _add(Path(so))
+            # The glob also matches cc_library/cc_binary BYPRODUCTS that share
+            # the libtrace_decoder_* prefix but are NOT loadable plugins — the
+            # `*_protos.so` registrar TU (undefined symbols until linked into a
+            # plugin) and the bare `libtrace_decoder.so` decoder-core lib. A
+            # real plugin is `libtrace_decoder_<world>.so` (system / apps). Skip
+            # the byproducts so a stray one in bazel-bin can't shadow / break
+            # discovery.
+            if _is_plugin_filename(Path(so).name):
+                _add(Path(so))
 
     # 2. Legacy single-.so envs — one explicit plugin each.
     for env_name in ("RF_THEIA_TRACE_DECODER_SO", "THEIA_TRACE_DECODER"):
@@ -202,7 +219,15 @@ class TraceDecoder:
                 raise FileNotFoundError(
                     f"libtrace_decoder plugin not found at {p}."
                 )
-            self._plugins.append(_Plugin(p))
+            # A single unloadable .so (missing C ABI symbol, stale build
+            # byproduct that slipped through the filename filter) must NOT take
+            # the whole decoder down — skip it with a warning and keep the
+            # plugins that DO load.
+            try:
+                self._plugins.append(_Plugin(p))
+            except OSError as e:
+                _log.warning("trace decoder: skipping unloadable plugin %s (%s)",
+                             p, e)
 
         self._check_versions()
 

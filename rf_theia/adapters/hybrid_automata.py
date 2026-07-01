@@ -114,7 +114,8 @@ class HybridAutomata:
         self._sup_log = Path(f"/tmp/rf_statem_{self.node}_{os.getpid()}.log")
         senv = dict(env, THEIA_TRACE="1", THEIA_LOG_LEVEL="info",
                     THEIA_SUPERVISOR_MANIFEST="executor.json",
-                    THEIA_ROOT_DIR=".", THEIA_SUPERVISOR_INSTANCE="0")
+                    THEIA_INSTALL_DIR=str(CENTRAL_DIR / "current"),
+                    THEIA_SUPERVISOR_INSTANCE="0")
         self._sup = subprocess.Popen(
             ["./supervisor"], cwd=str(CENTRAL_DIR),
             stdout=open(self._sup_log, "w"), stderr=subprocess.STDOUT,
